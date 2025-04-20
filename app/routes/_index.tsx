@@ -33,12 +33,30 @@ function useIntersectionObserver() {
     observerRef.current = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          entry.target.classList.add('animate-slide-up', 'opacity-100');
-          entry.target.classList.remove('opacity-0', 'translate-y-10');
-          observerRef.current?.unobserve(entry.target);
+          // Apply different animations based on element position
+          const target = entry.target;
+          const rect = target.getBoundingClientRect();
+          const windowWidth = window.innerWidth;
+
+          if (rect.left < windowWidth / 3) {
+            // Left side elements slide from left
+            target.classList.add('animate-slide-in-left', 'opacity-100');
+          } else if (rect.right > windowWidth * 2 / 3) {
+            // Right side elements slide from right
+            target.classList.add('animate-slide-in-right', 'opacity-100');
+          } else {
+            // Center elements float up
+            target.classList.add('animate-float-up', 'opacity-100');
+          }
+
+          target.classList.remove('opacity-0', 'translate-y-10');
+          observerRef.current?.unobserve(target);
         }
       });
-    }, { threshold: 0.1 });
+    }, {
+      threshold: 0.1,
+      rootMargin: '0px 0px -100px 0px' // Trigger a bit earlier before element comes into view
+    });
 
     const elements = document.querySelectorAll('.animate-on-scroll');
     elements.forEach(el => {
