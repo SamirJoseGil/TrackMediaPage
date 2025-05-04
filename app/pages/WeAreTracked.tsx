@@ -121,7 +121,7 @@ export default function WeAreTracked() {
                                 <img
                                     src={member.image || `https://placehold.co/400x400?text=${encodeURIComponent(member.name)}`}
                                     alt={member.imageAlt || member.name}
-                                    className="w-full h-full object-cover object-top grayscale hover:grayscale-0 transition-all duration-300"
+                                    className="w-full h-full object-cover object-top grayscale transition-all duration-300"
                                     onError={(e) => {
                                         e.currentTarget.src = `https://placehold.co/400x400?text=${encodeURIComponent(member.name)}`;
                                     }}
@@ -162,7 +162,7 @@ export default function WeAreTracked() {
                                                 <img
                                                     src={member.image || `https://placehold.co/200x200?text=${encodeURIComponent(member.name)}`}
                                                     alt={member.imageAlt || member.name}
-                                                    className="w-full h-full object-cover object-top grayscale hover:grayscale-0 transition-all duration-300"
+                                                    className="w-full h-full object-cover object-top grayscale transition-all duration-300"
                                                     onError={(e) => {
                                                         e.currentTarget.src = `https://placehold.co/200x200?text=${encodeURIComponent(member.name)}`;
                                                     }}
@@ -204,7 +204,7 @@ export default function WeAreTracked() {
                                     <img
                                         src={member.image || `https://placehold.co/200x200?text=${encodeURIComponent(member.name)}`}
                                         alt={member.imageAlt || member.name}
-                                        className="w-full h-full object-cover object-top grayscale hover:grayscale-0 transition-all duration-300"
+                                        className="w-full h-full object-cover object-top grayscale transition-all duration-300"
                                         onError={(e) => {
                                             e.currentTarget.src = `https://placehold.co/200x200?text=${encodeURIComponent(member.name)}`;
                                         }}
