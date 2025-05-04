@@ -18,13 +18,13 @@ export default function VidaEnBackstage() {
                     <h2 className="text-3xl font-extrabold mb-6 text-primary animate-on-scroll uppercase">
                         La vida en el backstage
                     </h2>
-                    <p className="text-xl text-white dark:text-black mb-6 animate-on-scroll font-bold">
+                    <p className="text-xl text-black dark:text-white mb-6 animate-on-scroll font-bold">
                         Contamos con un equipo especializado en producción, dirección artística y estrategia creativa, enfocado en ofrecer resultados medibles y personalizados para cada cliente. En Tracked Media, no dejamos nada al azar; cada acción está diseñada para maximizar el impacto y garantizar el éxito.
                     </p>
                     <div className="grid grid-cols-2 gap-4">
                         <div className="animate-on-scroll">
                             <img
-                                src="/Img/1_12.jpg"
+                                src="/Img/1_12.webp"
                                 alt="Backstage Detail"
                                 className="rounded-xl shadow-lg w-full h-60 object-cover"
                                 onError={(e) => {
@@ -34,7 +34,7 @@ export default function VidaEnBackstage() {
                         </div>
                         <div className="animate-on-scroll">
                             <img
-                                src="/Img/1_23.jpg"
+                                src="/Img/1_23.webp"
                                 alt="Backstage Team"
                                 className="rounded-xl shadow-lg w-full h-60 object-cover"
                                 onError={(e) => {
@@ -65,7 +65,7 @@ export default function VidaEnBackstage() {
                             <div className="absolute left-0 bottom-0 w-1/3 h-[380px] z-10 animate-on-scroll">
                                 <div className="rounded-xl overflow-hidden shadow-lg h-full transform hover:scale-105 transition-transform duration-700">
                                     <img
-                                        src="/Img/1_12.jpg"
+                                        src="/Img/1_12.webp"
                                         alt="Backstage Detail"
                                         className="w-full h-full object-cover"
                                         onError={(e) => {
@@ -79,7 +79,7 @@ export default function VidaEnBackstage() {
                             <div className="absolute right-0 bottom-0 w-2/3 h-[480px] animate-on-scroll">
                                 <div className="rounded-xl overflow-hidden shadow-lg h-full ml-6 transform hover:scale-105 transition-transform duration-700">
                                     <img
-                                        src="/Img/1_23.jpg"
+                                        src="/Img/1_23.webp"
                                         alt="Backstage Team"
                                         className="w-full h-full object-cover"
                                         onError={(e) => {

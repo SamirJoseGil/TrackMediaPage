@@ -1,4 +1,81 @@
 export default function CubrimientosAltavoz() {
+    // Array de videos para facilitar la renderización y mantenimiento
+    const videos = [
+        {
+            id: 1,
+            title: "Escenario Principal",
+            description: "Highlights de las bandas principales",
+            src: "/Media/video_escenario.mp4",
+            fallbackSrc: "https://placehold.co/800x450?text=Escenario+Principal",
+            delay: 0
+        },
+        {
+            id: 2,
+            title: "Momentos Backstage",
+            description: "Un vistazo tras bambalinas",
+            src: "/Media/video_backstage.mp4",
+            fallbackSrc: "https://placehold.co/800x450?text=Backstage",
+            delay: 0.2
+        },
+        {
+            id: 3,
+            title: "Experiencia de Fans",
+            description: "La energía del público en el festival",
+            src: "/Media/video_escenario.mp4",
+            fallbackSrc: "https://placehold.co/800x450?text=Fans",
+            delay: 0.4
+        }
+    ];
+
+    // Función para manejar errores de carga de video
+    const handleVideoError = (e: React.SyntheticEvent<HTMLVideoElement, Event>, fallback: string) => {
+        console.error("Error cargando video:", e);
+        const videoElement = e.currentTarget;
+
+        // Crear un elemento de imagen como fallback
+        const img = new Image();
+        img.src = fallback;
+        img.className = "w-full h-full object-cover";
+        img.alt = "Video no disponible";
+
+        // Reemplazar el video con la imagen
+        const parent = videoElement.parentElement;
+        if (parent) {
+            videoElement.style.display = 'none';
+            parent.appendChild(img);
+
+            // Agregar un mensaje de error
+            const errorMsg = document.createElement('div');
+            errorMsg.className = "absolute inset-0 flex items-center justify-center bg-tracked-black/50 text-white text-center p-4";
+            errorMsg.innerHTML = "<p>Video no disponible</p>";
+            parent.appendChild(errorMsg);
+        }
+    };
+
+    // Nueva función para reproducir el video al hacer clic en el botón personalizado
+    const handlePlayButtonClick = (videoId: number) => {
+        const videoElement = document.getElementById(`video-${videoId}`) as HTMLVideoElement;
+        if (videoElement) {
+            if (videoElement.paused) {
+                videoElement.play().catch(error => {
+                    console.error("Error al reproducir el video:", error);
+                    // Mostrar un mensaje al usuario si hay un error
+                    const parent = videoElement.parentElement;
+                    if (parent) {
+                        const errorMsg = document.createElement('div');
+                        errorMsg.className = "absolute inset-0 flex items-center justify-center bg-tracked-black/50 text-white text-center p-4";
+                        errorMsg.innerHTML = "<p>Error al reproducir. Intente nuevamente.</p>";
+                        parent.appendChild(errorMsg);
+                        // Eliminar el mensaje después de 3 segundos
+                        setTimeout(() => errorMsg.remove(), 3000);
+                    }
+                });
+            } else {
+                videoElement.pause();
+            }
+        }
+    };
+
     return (
         <>
             {/* SECTION 7: Cubrimientos - Altavoz Fest 2024 */}
@@ -20,119 +97,43 @@ export default function CubrimientosAltavoz() {
                         </p>
                     </div>
 
-                    {/* Video grid with manual videos */}
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-                        {/* Video 1: Escenario Principal */}
-                        <div className="animate-on-scroll group">
-                            <div className="aspect-video bg-gray-200 dark:bg-dark-lighter rounded-xl overflow-hidden shadow-lg mb-4 relative transform hover:scale-[1.02] transition-all duration-500">
-                                <video
-                                    className="w-full h-full object-cover"
-                                    poster="/Img/altavoz_poster_1.jpg"
-                                    controls
-                                    muted
-                                    loop
-                                    preload="none"
-                                >
-                                    <source src="/Media/video_escenario.mp4" type="video/mp4" />
-                                    Tu navegador no soporta videos HTML5.
-                                </video>
+                    {/* Video grid with improved error handling and responsiveness */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-10">
+                        {videos.map((video) => (
+                            <div key={video.id} className="animate-on-scroll group" style={{ animationDelay: `${video.delay}s` }}>
+                                <div className="aspect-video bg-gray-200 dark:bg-dark-lighter rounded-xl overflow-hidden shadow-lg mb-4 relative transform hover:scale-[1.02] transition-all duration-500">
+                                    <video
+                                        id={`video-${video.id}`}
+                                        className="w-full h-full object-cover cursor-pointer"
+                                        controls
+                                        preload="metadata" // Importante: cargar solo los metadatos
+                                        onClick={(e) => e.currentTarget.play()}
+                                        onError={(e) => handleVideoError(e, video.fallbackSrc)}
+                                        playsInline
+                                    >
+                                        <source src={video.src} type="video/mp4" />
+                                        <source src={video.src.replace('.mp4', '.webm')} type="video/webm" />
+                                        Tu navegador no soporta videos HTML5.
+                                    </video>
 
-                                {/* Play button overlay */}
-                                <div className="absolute inset-0 flex items-center justify-center bg-tracked-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                    <div className="w-16 h-16 rounded-full bg-primary/80 flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300">
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                        </svg>
+                                    {/* Play button overlay - modificado para no interferir con controles */}
+                                    <div
+                                        className="absolute inset-0 flex items-center justify-center bg-tracked-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 cursor-pointer"
+                                        onClick={() => handlePlayButtonClick(video.id)}
+                                    >
+                                        <div className="w-16 h-16 rounded-full bg-primary/80 flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300">
+                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                            </svg>
+                                        </div>
                                     </div>
                                 </div>
 
-                                {/* Video duration badge */}
-                                <div className="absolute bottom-3 right-3 bg-tracked-black/70 text-white text-xs px-2 py-1 rounded-md">
-                                    0:05
-                                </div>
+                                <h3 className="text-xl sm:text-2xl font-bold mb-2 text-gray-800 dark:text-gray-200 group-hover:text-primary transition-colors">{video.title}</h3>
+                                <p className="text-gray-600 dark:text-gray-400">{video.description}</p>
                             </div>
-
-                            <h3 className="text-2xl font-bold mb-2 text-gray-800 dark:text-gray-200 group-hover:text-primary transition-colors">Escenario Principal</h3>
-                            <p className="text-gray-600 dark:text-gray-400">Highlights de las bandas principales</p>
-                        </div>
-
-                        {/* Video 2: Momentos Backstage */}
-                        <div className="animate-on-scroll group" style={{ animationDelay: '0.2s' }}>
-                            <div className="aspect-video bg-gray-200 dark:bg-dark-lighter rounded-xl overflow-hidden shadow-lg mb-4 relative transform hover:scale-[1.02] transition-all duration-500">
-                                <video
-                                    className="w-full h-full object-cover"
-                                    poster="/Img/altavoz_poster_2.jpg"
-                                    controls
-                                    muted
-                                    loop
-                                    preload="none"
-                                >
-                                    <source src="/Media/video_backstage.mp4" type="video/mp4" />
-                                    Tu navegador no soporta videos HTML5.
-                                </video>
-
-                                {/* Play button overlay */}
-                                <div className="absolute inset-0 flex items-center justify-center bg-tracked-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                    <div className="w-16 h-16 rounded-full bg-primary/80 flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300">
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                        </svg>
-                                    </div>
-                                </div>
-
-                                {/* Video duration badge */}
-                                <div className="absolute bottom-3 right-3 bg-tracked-black/70 text-white text-xs px-2 py-1 rounded-md">
-                                    0:05
-                                </div>
-                            </div>
-
-                            <h3 className="text-2xl font-bold mb-2 text-gray-800 dark:text-gray-200 group-hover:text-primary transition-colors">Momentos Backstage</h3>
-                            <p className="text-gray-600 dark:text-gray-400">Un vistazo tras bambalinas</p>
-                        </div>
-
-                        {/* Video 3: Experiencia de Fans */}
-                        <div className="animate-on-scroll group" style={{ animationDelay: '0.4s' }}>
-                            <div className="aspect-video bg-gray-200 dark:bg-dark-lighter rounded-xl overflow-hidden shadow-lg mb-4 relative transform hover:scale-[1.02] transition-all duration-500">
-                                <video
-                                    className="w-full h-full object-cover"
-                                    poster="/Img/altavoz_poster_3.jpg"
-                                    controls
-                                    muted
-                                    loop
-                                    preload="none"
-                                >
-                                    <source src="/Media/video_fans.mp4" type="video/mp4" />
-                                    Tu navegador no soporta videos HTML5.
-                                </video>
-
-                                {/* Play button overlay */}
-                                <div className="absolute inset-0 flex items-center justify-center bg-tracked-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                    <div className="w-16 h-16 rounded-full bg-primary/80 flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300">
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                        </svg>
-                                    </div>
-                                </div>
-
-                                {/* Video duration badge */}
-                                <div className="absolute bottom-3 right-3 bg-tracked-black/70 text-white text-xs px-2 py-1 rounded-md">
-                                    0:05
-                                </div>
-                            </div>
-
-                            <h3 className="text-2xl font-bold mb-2 text-gray-800 dark:text-gray-200 group-hover:text-primary transition-colors">Experiencia de Fans</h3>
-                            <p className="text-gray-600 dark:text-gray-400">La energía del público en el festival</p>
-                        </div>
-                    </div>
-
-                    {/* Call to action */}
-                    <div className="mt-16 text-center animate-on-scroll">
-                        <a href="#contact" className="inline-block px-8 py-3 bg-primary text-white rounded-full hover:bg-primary-dark transition-all transform hover:scale-105">
-                            Ver galería completa
-                        </a>
+                        ))}
                     </div>
                 </div>
 

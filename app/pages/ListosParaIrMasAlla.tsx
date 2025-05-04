@@ -41,7 +41,7 @@ export default function ListosParaIrMasAlla() {
 
                     <div className="animate-on-scroll">
                         <img
-                            src="https://placehold.co/400x600?text=Beyond"
+                            src="Img/_DSC5526.webp"
                             alt="Beyond"
                             className="rounded-xl shadow-lg w-full h-full object-cover"
                         />

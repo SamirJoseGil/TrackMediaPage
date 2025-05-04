@@ -35,10 +35,10 @@ const services = [
 export default function ServiciosDestacados() {
     return (
         <>
-            {/* SECTION 5: Servicios destacados con fondo mejorado */}
-            <section className="py-8 px-6 bg-service-bg bg-cover bg-fixed bg-center bg-no-repeat relative overflow-hidden">
-                {/* Gradient overlay with improved opacity */}
-                <div className="absolute inset-0 bg-gradient-to-b from-tracked-black/70 to-tracked-black/90"></div>
+            {/* SECTION 5: Servicios destacados con fondo adaptable al tema */}
+            <section className="py-8 px-6 bg-tracked-white dark:bg-service-bg bg-cover bg-fixed bg-center bg-no-repeat relative overflow-hidden">
+                {/* Gradient overlay con opacidad ajustada para modo claro/oscuro */}
+                <div className="absolute inset-0 bg-white/40 dark:bg-gradient-to-b dark:from-tracked-black/70 dark:to-tracked-black/90"></div>
 
                 {/* Animated decorative elements */}
                 <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-primary/10 rounded-full blur-3xl animate-float" style={{ animationDelay: '0.5s' }}></div>
@@ -47,11 +47,11 @@ export default function ServiciosDestacados() {
                 <div className="container mx-auto relative z-10">
                     {/* Section header */}
                     <div className="text-center mb-16">
-                        <h2 className="text-4xl md:text-5xl font-extrabold mb-4 text-tracked-white animate-on-scroll uppercase">
+                        <h2 className="text-4xl md:text-5xl font-extrabold mb-4 text-gray-800 dark:text-tracked-white animate-on-scroll uppercase">
                             Servicios <span className="text-primary">Destacados</span>
                         </h2>
                         <div className="w-24 h-1 bg-primary mx-auto mb-6 animate-on-scroll"></div>
-                        <p className="max-w-2xl mx-auto text-xl text-gray-300 animate-on-scroll">
+                        <p className="max-w-2xl mx-auto text-xl text-gray-600 dark:text-gray-300 animate-on-scroll">
                             Contamos con el equipo y la experiencia para hacer realidad cualquier proyecto audiovisual que imagines
                         </p>
                     </div>
@@ -61,12 +61,12 @@ export default function ServiciosDestacados() {
                         {services.map((service, index) => (
                             <div
                                 key={index}
-                                className="p-8 rounded-2xl backdrop-blur-sm bg-tracked-white/10 hover:bg-tracked-white/15 border border-primary/5 hover:border-primary/20 transition-all duration-500 transform hover:-translate-y-2 hover:shadow-lg hover:shadow-primary/20 animate-on-scroll group"
+                                className="p-8 rounded-2xl backdrop-blur-sm bg-white/80 dark:bg-tracked-white/10 hover:bg-white/90 dark:hover:bg-tracked-white/15 border border-gray-200 dark:border-primary/5 hover:border-gray-300 dark:hover:border-primary/20 transition-all duration-500 transform hover:-translate-y-2 hover:shadow-lg hover:shadow-primary/20 animate-on-scroll group"
                                 style={{ animationDelay: `${index * 0.1}s` }}
                             >
                                 <div className="text-primary text-5xl mb-6 group-hover:scale-110 transition-transform duration-500">{service.icon}</div>
-                                <h3 className="text-2xl font-bold mb-3 text-tracked-white group-hover:text-primary transition-colors duration-300">{service.title}</h3>
-                                <p className="text-gray-400 group-hover:text-gray-300 transition-colors duration-300">{service.description}</p>
+                                <h3 className="text-2xl font-bold mb-3 text-gray-800 dark:text-tracked-white group-hover:text-primary transition-colors duration-300">{service.title}</h3>
+                                <p className="text-gray-600 dark:text-gray-400 group-hover:text-gray-800 dark:group-hover:text-gray-300 transition-colors duration-300">{service.description}</p>
 
                                 <div className="mt-6 w-0 group-hover:w-full h-0.5 bg-primary transition-all duration-500 opacity-0 group-hover:opacity-100"></div>
                             </div>

@@ -1,5 +1,79 @@
-
 {/* SECTION 10: We Are Tracked (Team) */ }
+
+// Lista para miembros principales del equipo
+const coreTeam = [
+    {
+        name: "Jhoan Alzate",
+        position: "Director Creativo",
+        image: "Img/Team/Jhoan.webp",
+        imageAlt: "Jhoan Alzate"
+    },
+    {
+        name: "Daniel Barrera",
+        position: "Director General",
+        image: "Img/Team/Daniel.webp",
+        imageAlt: "Daniel Barrera"
+    },
+    {
+        name: "Nicolas Castro",
+        position: "Director Audiovisual",
+        image: "/Img/Team/Nicolas.webp",
+        imageAlt: "Nicolas Castro"
+    }
+];
+
+// Lista para el equipo extendido
+const extendedTeam = [
+    {
+        name: "Albert Zuluaga",
+        position: "Director Postproducción",
+        image: "/Img/Team/Albert.webp",
+        imageAlt: "Albert Zuluaga"
+    },
+    {
+        name: "Juan Otalvaro",
+        position: "Ingeniero de Sonido",
+        image: "/Img/Team/Juan.webp",
+        imageAlt: "Juan Otalvaro"
+    },
+    {
+        name: "Lauren Castro",
+        position: "Fotógrafa",
+        image: "/Img/Team/Lauren.webp",
+        imageAlt: "Lauren Castro"
+    },
+    {
+        name: "Alejandro Orozco",
+        position: "Fotógrafo",
+        image: "/Img/Team/Alejandro.webp",
+        imageAlt: "Alejandro Orozco"
+    },
+    {
+        name: "Samuel Garcés",
+        position: "Asistente de Dirección",
+        image: "/Img/Team/Samuel.webp",
+        imageAlt: "Samuel Garcés"
+    },
+    {
+        name: "Angie",
+        position: "Asistente de Producción",
+        image: "/Img/Team/Angie.webp",
+        imageAlt: "Angie"
+    },
+    {
+        name: "Javier Martinez",
+        position: "Filmmaker",
+        image: "/Img/Team/Javier.webp",
+        imageAlt: "Javier Martinez"
+    },
+    {
+        name: "Alejandro Cuartas",
+        position: "Piloto de Drones",
+        image: "/Img/Team/AlejandroDron.webp",
+        imageAlt: "Alejandro Cuartas"
+    }
+];
+
 export default function WeAreTracked() {
     return (
         <section id="team" className="py-20 px-6 bg-tracked-white dark:bg-tracked-black">
@@ -10,40 +84,48 @@ export default function WeAreTracked() {
 
                 {/* Core team members */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-                    {[1, 2, 3].map((item, index) => (
+                    {coreTeam.map((member, index) => (
                         <div
                             key={index}
-                            className="bg-gray-50 dark:bg-dark-light rounded-xl p-6 shadow-lg animate-on-scroll"
+                            className="bg-gray-50 dark:bg-dark-light rounded-xl p-6 shadow-lg animate-on-scroll hover:shadow-xl transition-all duration-300"
+                            style={{ animationDelay: `${index * 0.2}s` }}
                         >
                             <div className="aspect-square bg-gray-200 dark:bg-dark-lighter rounded-lg mb-4 overflow-hidden">
                                 <img
-                                    src={`https://placehold.co/400x400?text=Team+Member+${item}`}
-                                    alt={`Team Member ${item}`}
-                                    className="w-full h-full object-cover"
+                                    src={member.image || `https://placehold.co/400x400?text=${encodeURIComponent(member.name)}`}
+                                    alt={member.imageAlt || member.name}
+                                    className="w-full h-full object-cover object-top grayscale transition-all duration-300"
+                                    onError={(e) => {
+                                        e.currentTarget.src = `https://placehold.co/400x400?text=${encodeURIComponent(member.name)}`;
+                                    }}
                                 />
                             </div>
-                            <h3 className="text-xl font-bold">Nombre Completo</h3>
-                            <p className="text-gray-600 dark:text-gray-400">Co-Fundador & Director Creativo</p>
+                            <h3 className="text-xl font-bold text-gray-800 dark:text-gray-200 uppercase">{member.name}</h3>
+                            <p className="text-gray-600 dark:text-gray-400">{member.position}</p>
                         </div>
                     ))}
                 </div>
 
                 {/* Extended team members */}
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                    {Array.from({ length: 8 }).map((_, index) => (
+                    {extendedTeam.map((member, index) => (
                         <div
                             key={index}
-                            className="bg-gray-50 dark:bg-dark-light rounded-xl p-4 shadow-md animate-on-scroll"
+                            className="bg-gray-50 dark:bg-dark-light rounded-xl p-4 shadow-md animate-on-scroll hover:shadow-lg transition-all duration-300"
+                            style={{ animationDelay: `${(index * 0.1) + 0.6}s` }}
                         >
                             <div className="aspect-square bg-gray-200 dark:bg-dark-lighter rounded-lg mb-3 overflow-hidden">
                                 <img
-                                    src={`https://placehold.co/200x200?text=Team+${index + 4}`}
-                                    alt={`Team Member ${index + 4}`}
-                                    className="w-full h-full object-cover"
+                                    src={member.image || `https://placehold.co/200x200?text=${encodeURIComponent(member.name)}`}
+                                    alt={member.imageAlt || member.name}
+                                    className="w-full h-full object-cover object-top grayscale transition-all duration-300"
+                                    onError={(e) => {
+                                        e.currentTarget.src = `https://placehold.co/200x200?text=${encodeURIComponent(member.name)}`;
+                                    }}
                                 />
                             </div>
-                            <h3 className="text-lg font-medium">Nombre</h3>
-                            <p className="text-sm text-gray-600 dark:text-gray-400">Especialista</p>
+                            <h3 className="text-lg font-medium text-gray-800 dark:text-gray-200 uppercase">{member.name}</h3>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">{member.position}</p>
                         </div>
                     ))}
                 </div>
